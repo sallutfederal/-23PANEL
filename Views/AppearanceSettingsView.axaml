@@ -1,0 +1,222 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Animus.ViewModels"
+             x:Class="Animus.Views.AppearanceSettingsView"
+             x:DataType="vm:AppearanceSettingsViewModel">
+
+  <UserControl.Styles>
+    <!-- linha de slider: rótulo à esquerda, valor à direita, slider embaixo -->
+    <Style Selector="Grid.sliderhead">
+      <Setter Property="Margin" Value="0,0,0,2" />
+    </Style>
+    <Style Selector="TextBlock.val">
+      <Setter Property="Foreground" Value="{DynamicResource AnimusAccent}" />
+      <Setter Property="FontSize" Value="{DynamicResource FsSmall}" />
+      <Setter Property="FontWeight" Value="Medium" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Border.head-ico">
+      <Setter Property="Width" Value="34" />
+      <Setter Property="Height" Value="34" />
+      <Setter Property="CornerRadius" Value="10" />
+      <Setter Property="Background" Value="{DynamicResource AnimusAccentSoft}" />
+    </Style>
+  </UserControl.Styles>
+
+  <StackPanel Spacing="18">
+
+    <!-- ===================== COR ===================== -->
+    <Border Classes="card">
+      <StackPanel Spacing="16">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Border Classes="head-ico">
+            <PathIcon Width="17" Height="17"
+                      Data="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z"
+                      Foreground="{DynamicResource AnimusAccent}" />
+          </Border>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Cor de destaque" Classes="h2" />
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                       Text="paleta pronta ou escolha livre" />
+          </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="14">
+          <ItemsControl ItemsSource="{Binding Swatches}" VerticalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate><WrapPanel MaxWidth="360" /></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate DataType="vm:AccentSwatch">
+                <Button Classes="swatch" Classes.selected="{Binding IsSelected}"
+                        Background="{Binding Brush}"
+                        Command="{Binding SelectCommand}" Margin="0,0,8,8" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+
+          <Border Width="1" Background="{DynamicResource AnimusBorder}" Margin="2,2" />
+
+          <StackPanel Spacing="6" VerticalAlignment="Center">
+            <TextBlock Text="PERSONALIZADA" Classes="label" Margin="0" />
+            <ColorPicker Color="{Binding AccentColor, Mode=TwoWay}"
+                         IsAlphaEnabled="False" Palette="{x:Null}" />
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- ===================== FONTE ===================== -->
+    <Border Classes="card">
+      <StackPanel Spacing="16">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Border Classes="head-ico">
+            <PathIcon Width="17" Height="17"
+                      Data="M9.62,12L12,5.67L14.37,12M11,3L5.5,17H7.75L8.87,14H15.12L16.25,17H18.5L13,3H11Z"
+                      Foreground="{DynamicResource AnimusAccent}" />
+          </Border>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Fonte" Classes="h2" />
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                       Text="muda o texto do app inteiro na hora" />
+          </StackPanel>
+        </StackPanel>
+
+        <ItemsControl ItemsSource="{Binding Fonts}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate><UniformGrid Columns="4" /></ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:ChoiceOption">
+              <Button Classes="option" Classes.selected="{Binding IsSelected}"
+                      Command="{Binding SelectCommand}" Margin="0,0,10,10">
+                <StackPanel Spacing="3">
+                  <TextBlock Text="{Binding Label}" FontFamily="{Binding PreviewFont}"
+                             FontSize="{DynamicResource FsTitle}" />
+                  <TextBlock Text="{Binding Description}" Classes="muted"
+                             FontSize="{DynamicResource FsMicro}" TextWrapping="Wrap" />
+                </StackPanel>
+              </Button>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <StackPanel Spacing="4">
+          <Grid Classes="sliderhead" ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0" Text="Tamanho do texto" Classes="label" Margin="0" />
+            <TextBlock Grid.Column="1" Classes="val" Text="{Binding FontScalePercent}" />
+          </Grid>
+          <Slider Minimum="{Binding FontScaleMin}" Maximum="{Binding FontScaleMax}"
+                  Value="{Binding FontScale, Mode=TwoWay}" TickFrequency="0.05" IsSnapToTickEnabled="True" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- ===================== DIMENSÕES ===================== -->
+    <Border Classes="card">
+      <StackPanel Spacing="18">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Border Classes="head-ico">
+            <PathIcon Width="17" Height="17"
+                      Data="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"
+                      Foreground="{DynamicResource AnimusAccent}" />
+          </Border>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Dimensões e opacidade" Classes="h2" />
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                       Text="cantos, espaçamento, tamanho das abas e transparência" />
+          </StackPanel>
+        </StackPanel>
+
+        <StackPanel Spacing="4">
+          <Grid Classes="sliderhead" ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0" Text="Opacidade dos painéis" Classes="label" Margin="0" />
+            <TextBlock Grid.Column="1" Classes="val" Text="{Binding PanelOpacityPercent}" />
+          </Grid>
+          <Slider Minimum="{Binding PanelOpacityMin}" Maximum="{Binding PanelOpacityMax}"
+                  Value="{Binding PanelOpacity, Mode=TwoWay}" TickFrequency="0.02" IsSnapToTickEnabled="True" />
+        </StackPanel>
+
+        <StackPanel Spacing="4">
+          <Grid Classes="sliderhead" ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0" Text="Fundo à mostra" Classes="label" Margin="0" />
+            <TextBlock Grid.Column="1" Classes="val" Text="{Binding BackgroundShowPercent}" />
+          </Grid>
+          <Slider Minimum="{Binding BackgroundDimMin}" Maximum="{Binding BackgroundDimMax}"
+                  Value="{Binding BackgroundShow, Mode=TwoWay}" TickFrequency="0.02" IsSnapToTickEnabled="True" />
+        </StackPanel>
+
+        <StackPanel Spacing="4">
+          <Grid Classes="sliderhead" ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0" Text="Arredondamento das caixas" Classes="label" Margin="0" />
+            <TextBlock Grid.Column="1" Classes="val" Text="{Binding CornerLabel}" />
+          </Grid>
+          <Slider Minimum="{Binding CornerMin}" Maximum="{Binding CornerMax}"
+                  Value="{Binding Corner, Mode=TwoWay}" TickFrequency="1" IsSnapToTickEnabled="True" />
+        </StackPanel>
+
+        <StackPanel Spacing="4">
+          <Grid Classes="sliderhead" ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0" Text="Espaçamento interno" Classes="label" Margin="0" />
+            <TextBlock Grid.Column="1" Classes="val" Text="{Binding PaddingLabel}" />
+          </Grid>
+          <Slider Minimum="{Binding PaddingMin}" Maximum="{Binding PaddingMax}"
+                  Value="{Binding CardPadding, Mode=TwoWay}" TickFrequency="1" IsSnapToTickEnabled="True" />
+        </StackPanel>
+
+        <StackPanel Spacing="4">
+          <Grid Classes="sliderhead" ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0" Text="Tamanho das abas e botões" Classes="label" Margin="0" />
+            <TextBlock Grid.Column="1" Classes="val" Text="{Binding ControlScalePercent}" />
+          </Grid>
+          <Slider Minimum="{Binding ControlScaleMin}" Maximum="{Binding ControlScaleMax}"
+                  Value="{Binding ControlScale, Mode=TwoWay}" TickFrequency="0.05" IsSnapToTickEnabled="True" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- ===================== EFEITOS ===================== -->
+    <Border Classes="card">
+      <StackPanel Spacing="14">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Border Classes="head-ico">
+            <PathIcon Width="17" Height="17"
+                      Data="M12,2L14.4,9.6L22,12L14.4,14.4L12,22L9.6,14.4L2,12L9.6,9.6L12,2Z"
+                      Foreground="{DynamicResource AnimusAccent}" />
+          </Border>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Efeitos" Classes="h2" />
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                       Text="sombras e animações" />
+          </StackPanel>
+        </StackPanel>
+
+        <Border Background="{DynamicResource AnimusPanel2}" BorderBrush="{DynamicResource AnimusBorder}"
+                BorderThickness="1" CornerRadius="{DynamicResource RadControl}" Padding="16,14">
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Grid.Column="0" Spacing="2">
+              <TextBlock Text="Sombras" FontWeight="Medium" />
+              <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}" Text="profundidade sob os cards" />
+            </StackPanel>
+            <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                          IsChecked="{Binding Shadows, Mode=TwoWay}" />
+          </Grid>
+        </Border>
+
+        <Border Background="{DynamicResource AnimusPanel2}" BorderBrush="{DynamicResource AnimusBorder}"
+                BorderThickness="1" CornerRadius="{DynamicResource RadControl}" Padding="16,14">
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Grid.Column="0" Spacing="2">
+              <TextBlock Text="Animações" FontWeight="Medium" />
+              <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}" Text="pulsos e brilhos" />
+            </StackPanel>
+            <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                          IsChecked="{Binding Animations, Mode=TwoWay}" />
+          </Grid>
+        </Border>
+      </StackPanel>
+    </Border>
+
+  </StackPanel>
+
+</UserControl>

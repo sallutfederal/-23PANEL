@@ -1,0 +1,168 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Animus.ViewModels"
+             x:Class="Animus.Views.ShellView"
+             x:DataType="vm:MainWindowViewModel">
+
+  <Grid ColumnDefinitions="Auto,*">
+    <Border Grid.Column="0" Classes="sidebar"
+            Width="{Binding SidebarWidth}"
+            ClipToBounds="True"
+            Background="{DynamicResource AnimusSidebar}"
+            BorderBrush="{DynamicResource AnimusBorder}"
+            BorderThickness="0,0,1,0">
+      <DockPanel Margin="14,22,14,18">
+
+        <!-- marca -->
+        <StackPanel DockPanel.Dock="Top" Spacing="11" Margin="0,0,0,26">
+          <Border Classes="brand-logo"
+                  Width="{Binding SidebarLogoSize}" Height="{Binding SidebarLogoSize}"
+                  CornerRadius="17" ClipToBounds="True"
+                  HorizontalAlignment="Center"
+                  BorderBrush="{DynamicResource AnimusBorder2}" BorderThickness="1">
+            <Image Source="/Assets/logo.png" Stretch="UniformToFill" />
+          </Border>
+          <TextBlock Classes="side-label" Text="23 PANEL"
+                     Opacity="{Binding SidebarLabelOpacity}"
+                     HorizontalAlignment="Center"
+                     FontSize="{DynamicResource FsBrand}" FontWeight="Medium" LetterSpacing="3"
+                     Foreground="{DynamicResource AnimusAccent}" />
+        </StackPanel>
+
+        <!-- rodape: usuario + sair -->
+        <StackPanel DockPanel.Dock="Bottom" Spacing="10">
+          <Border Background="{DynamicResource AnimusPanel}"
+                  BorderBrush="{DynamicResource AnimusBorder}" BorderThickness="1"
+                  CornerRadius="12" Padding="11" MinWidth="54">
+            <StackPanel Orientation="Horizontal" Spacing="11">
+              <Border Width="32" Height="32" CornerRadius="16"
+                      Background="{DynamicResource AnimusAccentSoft}"
+                      BorderBrush="{DynamicResource AnimusAccent}" BorderThickness="1">
+                <TextBlock Text="{Binding UserInitial}"
+                           FontSize="{DynamicResource FsBody}" FontWeight="Medium"
+                           Foreground="{DynamicResource AnimusAccent}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+              </Border>
+              <StackPanel Classes="side-label" Opacity="{Binding SidebarLabelOpacity}"
+                          VerticalAlignment="Center">
+                <TextBlock Text="{Binding UserName}" FontSize="{DynamicResource FsBody}" FontWeight="Medium" />
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <Ellipse Classes.pulse="{Binding AnimationsEnabled}" Width="6" Height="6" VerticalAlignment="Center"
+                           Fill="{DynamicResource AnimusAccent}" />
+                  <TextBlock Text="conectado" Classes="muted" FontSize="{DynamicResource FsSmall}" />
+                </StackPanel>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+
+          <Button Classes="nav" Command="{Binding LogoutCommand}">
+            <Grid ColumnDefinitions="3,Auto,*">
+              <PathIcon Grid.Column="1" Margin="6,0,0,0"
+                        Data="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z" />
+              <TextBlock Grid.Column="2" Classes="side-label" Opacity="{Binding SidebarLabelOpacity}"
+                         Margin="12,0,0,0" Text="Sair" VerticalAlignment="Center" />
+            </Grid>
+          </Button>
+        </StackPanel>
+
+        <!-- navegacao -->
+        <StackPanel Spacing="5">
+          <TextBlock Classes="label side-label" Text="NAVEGAÇÃO"
+                     Opacity="{Binding SidebarLabelOpacity}" Margin="12,0,0,8" />
+
+          <Button Classes="nav" Classes.active="{Binding IsDashboardActive}"
+                  Command="{Binding ShowDashboardCommand}">
+            <Grid ColumnDefinitions="3,Auto,*">
+              <Border Grid.Column="0" Classes="indicator" Classes.on="{Binding IsDashboardActive}"
+                      HorizontalAlignment="Left" VerticalAlignment="Center" />
+              <PathIcon Grid.Column="1" Margin="6,0,0,0"
+                        Data="M3,3H11V11H3V3M13,3H21V11H13V3M3,13H11V21H3V13M13,13H21V21H13V13Z" />
+              <TextBlock Grid.Column="2" Classes="side-label" Opacity="{Binding SidebarLabelOpacity}"
+                         Margin="12,0,0,0" Text="Dashboard" VerticalAlignment="Center" />
+            </Grid>
+          </Button>
+
+          <Button Classes="nav" Classes.active="{Binding IsDoxActive}"
+                  Command="{Binding ShowDoxCommand}">
+            <Grid ColumnDefinitions="3,Auto,*">
+              <Border Grid.Column="0" Classes="indicator" Classes.on="{Binding IsDoxActive}"
+                      HorizontalAlignment="Left" VerticalAlignment="Center" />
+              <PathIcon Grid.Column="1" Margin="6,0,0,0"
+                        Data="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+              <TextBlock Grid.Column="2" Classes="side-label" Opacity="{Binding SidebarLabelOpacity}"
+                         Margin="12,0,0,0" Text="23 DOX" VerticalAlignment="Center" />
+            </Grid>
+          </Button>
+
+          <Button Classes="nav" Classes.active="{Binding IsHotActive}"
+                  Command="{Binding ShowHotCommand}">
+            <Grid ColumnDefinitions="3,Auto,*">
+              <Border Grid.Column="0" Classes="indicator" Classes.on="{Binding IsHotActive}"
+                      HorizontalAlignment="Left" VerticalAlignment="Center" />
+              <PathIcon Grid.Column="1" Margin="6,0,0,0"
+                        Data="M17.66,11.2C17.43,10.9 17.15,10.64 16.89,10.38C16.22,9.78 15.46,9.35 14.82,8.72C13.33,7.26 13,4.85 13.95,3C13,3.23 12.17,3.75 11.46,4.32C8.87,6.4 7.85,10.07 9.07,13.22C9.11,13.32 9.15,13.42 9.15,13.55C9.15,13.77 9,13.97 8.8,14.05C8.57,14.15 8.33,14.09 8.14,13.93C8.08,13.88 8.04,13.83 8,13.76C6.87,12.33 6.69,10.28 7.45,8.64C5.78,10 4.87,12.3 5,14.47C5.06,14.97 5.12,15.47 5.29,15.97C5.43,16.57 5.7,17.17 6,17.7C7.08,19.43 8.95,20.67 10.96,20.92C13.1,21.19 15.39,20.8 17.03,19.32C18.86,17.66 19.5,15 18.56,12.72L18.43,12.46C18.22,12 17.66,11.2 17.66,11.2M14.5,17.5C14.22,17.74 13.76,18 13.4,18.1C12.28,18.5 11.16,17.94 10.5,17.28C11.69,17 12.4,16.12 12.61,15.23C12.78,14.43 12.46,13.77 12.33,13C12.21,12.26 12.23,11.63 12.5,10.94C12.69,11.32 12.89,11.7 13.13,12C13.9,13 15.11,13.44 15.37,14.8C15.41,14.94 15.43,15.08 15.43,15.23C15.46,16.05 15.1,16.95 14.5,17.5H14.5Z" />
+              <TextBlock Grid.Column="2" Classes="side-label" Opacity="{Binding SidebarLabelOpacity}"
+                         Margin="12,0,0,0" Text="23 HOT" VerticalAlignment="Center" />
+            </Grid>
+          </Button>
+
+          <Button Classes="nav" Classes.active="{Binding IsSettingsActive}"
+                  Command="{Binding ShowSettingsCommand}">
+            <Grid ColumnDefinitions="3,Auto,*">
+              <Border Grid.Column="0" Classes="indicator" Classes.on="{Binding IsSettingsActive}"
+                      HorizontalAlignment="Left" VerticalAlignment="Center" />
+              <PathIcon Grid.Column="1" Margin="6,0,0,0"
+                        Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+              <TextBlock Grid.Column="2" Classes="side-label" Opacity="{Binding SidebarLabelOpacity}"
+                         Margin="12,0,0,0" Text="Configurações" VerticalAlignment="Center" />
+            </Grid>
+          </Button>
+        </StackPanel>
+
+      </DockPanel>
+    </Border>
+
+    <DockPanel Grid.Column="1">
+
+      <Grid DockPanel.Dock="Top" Margin="22,24,30,14" ColumnDefinitions="Auto,*,Auto">
+
+        <!-- botao de recolher/expandir a barra lateral -->
+        <Button Grid.Column="0" Classes="icon-btn" VerticalAlignment="Center" Margin="0,0,14,0"
+                Command="{Binding ToggleSidebarCommand}">
+          <PathIcon Classes="chevron" Classes.flipped="{Binding !IsSidebarExpanded}"
+                    Width="16" Height="16"
+                    Data="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+        </Button>
+
+        <StackPanel Grid.Column="1" Spacing="3">
+          <TextBlock Text="{Binding PageTitle}" Classes="h1" />
+          <TextBlock Text="{Binding PageSubtitle}" Classes="muted" FontSize="{DynamicResource FsSubtitle}" />
+        </StackPanel>
+
+        <Border Grid.Column="2" VerticalAlignment="Center"
+                Background="{DynamicResource AnimusPanel}"
+                BorderBrush="{DynamicResource AnimusBorder}" BorderThickness="1"
+                CornerRadius="20" Padding="14,7">
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Ellipse Classes.pulse="{Binding AnimationsEnabled}" Width="7" Height="7" VerticalAlignment="Center"
+                     Fill="{DynamicResource AnimusAccent}" />
+            <TextBlock Text="online" FontSize="{DynamicResource FsSubtitle}" FontWeight="Medium"
+                       Foreground="{DynamicResource AnimusAccent}" VerticalAlignment="Center" />
+          </StackPanel>
+        </Border>
+      </Grid>
+
+      <!-- Cada página rola por dentro (cada uma tem seu ScrollViewer): assim a página
+           tem altura definida e listas grandes podem virtualizar. -->
+      <TransitioningContentControl Content="{Binding CurrentPage}"
+                                   Margin="30,6,30,34">
+        <TransitioningContentControl.PageTransition>
+          <CrossFade Duration="0:0:0.22" />
+        </TransitioningContentControl.PageTransition>
+      </TransitioningContentControl>
+
+    </DockPanel>
+
+  </Grid>
+
+</UserControl>

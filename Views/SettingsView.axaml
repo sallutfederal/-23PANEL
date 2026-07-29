@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Animus.ViewModels"
+             x:Class="Animus.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+  <StackPanel Spacing="18">
+
+    <Border Background="{DynamicResource AnimusPanel}"
+            BorderBrush="{DynamicResource AnimusBorder}" BorderThickness="1"
+            CornerRadius="{DynamicResource RadCard}" Padding="6" HorizontalAlignment="Left">
+      <ItemsControl ItemsSource="{Binding Tabs}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="vm:SettingsTab">
+            <Button Classes="tab" Classes.selected="{Binding IsSelected}"
+                    Command="{Binding SelectCommand}" Margin="2">
+              <StackPanel Orientation="Horizontal" Spacing="9">
+                <PathIcon Width="15" Height="15" Data="{Binding Icon}" />
+                <TextBlock Text="{Binding Title}" VerticalAlignment="Center" />
+              </StackPanel>
+            </Button>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </Border>
+    <ContentControl Content="{Binding CurrentContent}" />
+
+  </StackPanel>
+  </ScrollViewer>
+
+</UserControl>

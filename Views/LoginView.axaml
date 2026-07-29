@@ -1,0 +1,75 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Animus.ViewModels"
+             x:Class="Animus.Views.LoginView"
+             x:DataType="vm:LoginViewModel">
+
+  <UserControl.Styles>
+    <Style Selector="TextBlock.status">
+      <Setter Property="FontSize" Value="{DynamicResource FsLabel}" />
+      <Setter Property="LetterSpacing" Value="1.6" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="Foreground" Value="{DynamicResource AnimusMuted}" />
+      <Setter Property="Transitions">
+        <Transitions>
+          <BrushTransition Property="Foreground" Duration="0:0:0.2" />
+        </Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="TextBlock.status.err">
+      <Setter Property="Foreground" Value="{DynamicResource AnimusDanger}" />
+    </Style>
+  </UserControl.Styles>
+
+  <Border Classes="login-card" Classes.err="{Binding HasError}"
+          Width="404" Padding="36,34"
+          CornerRadius="20"
+          Background="{DynamicResource AnimusPanel}"
+          BorderBrush="{DynamicResource AnimusBorder2}" BorderThickness="1"
+          BoxShadow="0 28 70 -22 #d9000000"
+          HorizontalAlignment="Center" VerticalAlignment="Center">
+
+    <StackPanel Spacing="16">
+
+      <Border Width="90" Height="90" CornerRadius="26" ClipToBounds="True"
+              HorizontalAlignment="Center"
+              BorderBrush="{DynamicResource AnimusBorder2}" BorderThickness="1">
+        <Image Source="/Assets/logo.png" Stretch="UniformToFill" />
+      </Border>
+
+      <StackPanel Spacing="6">
+        <TextBlock Text="23 PANEL"
+                   HorizontalAlignment="Center"
+                   FontSize="{DynamicResource FsLoginTitle}" FontWeight="Medium" LetterSpacing="5"
+                   Foreground="{DynamicResource AnimusAccent}" />
+        <TextBlock Text="{Binding Status}" Classes="status" Classes.err="{Binding HasError}" />
+      </StackPanel>
+
+      <StackPanel Spacing="6" Margin="0,4,0,0">
+        <TextBlock Text="USUÁRIO" Classes="label" Margin="0" />
+        <TextBox Name="LoginBox" Classes="field"
+                 Text="{Binding Login}"
+                 Watermark="login"
+                 IsEnabled="{Binding !IsBusy}" />
+      </StackPanel>
+
+      <StackPanel Spacing="6">
+        <TextBlock Text="SENHA" Classes="label" Margin="0" />
+        <TextBox Name="PasswordBox" Classes="field"
+                 Text="{Binding Password}"
+                 PasswordChar="●"
+                 Watermark="senha"
+                 IsEnabled="{Binding !IsBusy}" />
+      </StackPanel>
+
+      <Button Classes="accent" Content="ENTRAR"
+              HorizontalAlignment="Stretch"
+              IsDefault="True"
+              IsEnabled="{Binding !IsBusy}"
+              Margin="0,8,0,0"
+              Command="{Binding SubmitCommand}" />
+
+    </StackPanel>
+  </Border>
+
+</UserControl>

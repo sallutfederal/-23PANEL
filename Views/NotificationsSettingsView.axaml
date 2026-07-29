@@ -1,0 +1,79 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Animus.ViewModels"
+             x:Class="Animus.Views.NotificationsSettingsView"
+             x:DataType="vm:NotificationsSettingsViewModel">
+
+  <UserControl.Styles>
+    <Style Selector="Border.row">
+      <Setter Property="Background" Value="{DynamicResource AnimusPanel2}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="11" />
+      <Setter Property="Padding" Value="16,14" />
+    </Style>
+  </UserControl.Styles>
+
+  <Border Classes="card">
+    <StackPanel Spacing="16">
+
+      <StackPanel Orientation="Horizontal" Spacing="10">
+        <Border Width="34" Height="34" CornerRadius="10"
+                Background="{DynamicResource AnimusAccentSoft}">
+          <PathIcon Width="17" Height="17"
+                    Data="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21"
+                    Foreground="{DynamicResource AnimusAccent}" />
+        </Border>
+        <StackPanel VerticalAlignment="Center">
+          <TextBlock Text="Notificações" Classes="h2" />
+          <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                     Text="avisos que aparecem no canto da janela" />
+        </StackPanel>
+      </StackPanel>
+
+      <Border Classes="row">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel Grid.Column="0" Spacing="2">
+            <TextBlock Text="Quando um processo terminar" FontWeight="Medium" />
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                       Text="avisa assim que uma execução for concluída" />
+          </StackPanel>
+          <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                        IsChecked="{Binding OnProcessFinished, Mode=TwoWay}" />
+        </Grid>
+      </Border>
+
+      <Border Classes="row">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel Grid.Column="0" Spacing="2">
+            <TextBlock Text="Quando um processo falhar" FontWeight="Medium" />
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                       Text="avisa se algo der errado no meio do caminho" />
+          </StackPanel>
+          <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                        IsChecked="{Binding OnProcessFailed, Mode=TwoWay}" />
+        </Grid>
+      </Border>
+
+      <Border Classes="row">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel Grid.Column="0" Spacing="2">
+            <TextBlock Text="Ao salvar configurações" FontWeight="Medium" />
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                       Text="confirma alterações como a troca de senha" />
+          </StackPanel>
+          <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                        IsChecked="{Binding OnSettingsSaved, Mode=TwoWay}" />
+        </Grid>
+      </Border>
+
+      <StackPanel Orientation="Horizontal" Spacing="14">
+        <Button Classes="ghost" Content="Testar notificação" Command="{Binding TestCommand}" />
+        <TextBlock Classes="muted" VerticalAlignment="Center"
+                   Text="mostra um aviso de exemplo no canto" />
+      </StackPanel>
+
+    </StackPanel>
+  </Border>
+
+</UserControl>

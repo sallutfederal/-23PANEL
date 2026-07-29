@@ -1,0 +1,7 @@
+bin/
+obj/
+*.user
+live.txt
+live_2fa.txt
+*.exe
+go.sum

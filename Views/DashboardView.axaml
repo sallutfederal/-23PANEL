@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Animus.ViewModels"
+             x:Class="Animus.Views.DashboardView"
+             x:DataType="vm:DashboardViewModel">
+
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+  <Border Classes="card enter" Padding="34,30" VerticalAlignment="Top">
+    <StackPanel Spacing="24">
+
+      <StackPanel Orientation="Horizontal" Spacing="9">
+        <Ellipse Classes.pulse="{Binding AnimationsEnabled}" Width="8" Height="8" VerticalAlignment="Center"
+                 Fill="{DynamicResource AnimusAccent}" />
+        <TextBlock Text="SESSÃO ATIVA"
+                   FontSize="{DynamicResource FsLabel}" FontWeight="Medium" LetterSpacing="1.6"
+                   Foreground="{DynamicResource AnimusAccent}" VerticalAlignment="Center" />
+      </StackPanel>
+
+      <Grid ColumnDefinitions="Auto,*">
+        <Border Grid.Column="0" Width="82" Height="82" CornerRadius="41" Margin="0,0,26,0"
+                VerticalAlignment="Center"
+                Background="{DynamicResource AnimusPanel3}"
+                BorderBrush="{DynamicResource AnimusAccent}" BorderThickness="1.5">
+          <TextBlock Text="{Binding Initial}"
+                     FontSize="{DynamicResource FsAvatar}" FontWeight="Medium"
+                     Foreground="{DynamicResource AnimusAccent}"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="0">
+          <TextBlock Text="{Binding Greeting}" FontSize="{DynamicResource FsGreeting}"
+                     Foreground="{DynamicResource AnimusText2}" />
+          <TextBlock Text="{Binding UserName}"
+                     FontSize="{DynamicResource FsHero}" FontWeight="SemiBold"
+                     Foreground="{DynamicResource AnimusAccent}" />
+        </StackPanel>
+      </Grid>
+
+      <Border Height="1" Background="{DynamicResource AnimusBorder}" />
+
+      <TextBlock Classes="muted" FontSize="{DynamicResource FsBody}"
+                 Text="Você está autenticado no 23 Panel." />
+
+    </StackPanel>
+  </Border>
+  </ScrollViewer>
+
+</UserControl>

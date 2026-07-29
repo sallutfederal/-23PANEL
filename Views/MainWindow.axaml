@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Animus.ViewModels"
+        xmlns:imaging="using:Avalonia.Media.Imaging"
+        x:Class="Animus.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="23 PANEL"
+        Icon="/Assets/logo.png"
+        Width="1180" Height="760"
+        MinWidth="940" MinHeight="620"
+        Background="{DynamicResource AnimusBg}"
+        WindowStartupLocation="CenterScreen">
+
+  <Panel>
+    <TransitioningContentControl Content="{Binding Background}"
+                                 HorizontalContentAlignment="Stretch"
+                                 VerticalContentAlignment="Stretch">
+      <TransitioningContentControl.ContentTemplate>
+        <DataTemplate DataType="imaging:Bitmap">
+          <Image Source="{Binding}" Stretch="UniformToFill"
+                 RenderOptions.BitmapInterpolationMode="HighQuality" />
+        </DataTemplate>
+      </TransitioningContentControl.ContentTemplate>
+      <TransitioningContentControl.PageTransition>
+        <CrossFade Duration="0:0:0.5" />
+      </TransitioningContentControl.PageTransition>
+    </TransitioningContentControl>
+
+    <Border Background="{DynamicResource AnimusScrim}" />
+
+    <TransitioningContentControl Content="{Binding RootContent}"
+                                 HorizontalContentAlignment="Stretch"
+                                 VerticalContentAlignment="Stretch">
+      <TransitioningContentControl.PageTransition>
+        <CrossFade Duration="0:0:0.35" />
+      </TransitioningContentControl.PageTransition>
+    </TransitioningContentControl>
+  </Panel>
+
+</Window>

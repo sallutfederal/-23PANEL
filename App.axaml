@@ -1,0 +1,162 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Animus.ViewModels"
+             xmlns:views="using:Animus.Views"
+             x:Class="Animus.App"
+             RequestedThemeVariant="Dark">
+
+  <Application.DataTemplates>
+    <DataTemplate DataType="vm:LoginViewModel">
+      <views:LoginView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:MainWindowViewModel">
+      <views:ShellView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:DashboardViewModel">
+      <views:DashboardView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:SettingsViewModel">
+      <views:SettingsView />
+    </DataTemplate>
+
+    <!-- abas de configuracoes -->
+    <DataTemplate DataType="vm:AccountSettingsViewModel">
+      <views:AccountSettingsView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:AppearanceSettingsViewModel">
+      <views:AppearanceSettingsView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:BackgroundSettingsViewModel">
+      <views:BackgroundSettingsView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:NotificationsSettingsViewModel">
+      <views:NotificationsSettingsView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:DoxViewModel">
+      <views:DoxView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:HotViewModel">
+      <views:HotView />
+    </DataTemplate>
+  </Application.DataTemplates>
+
+  <Application.Resources>
+    <ResourceDictionary>
+
+      <!-- ===== Fonte (a aba Aparência troca a família) ===== -->
+      <FontFamily x:Key="UiFont">avares://23PANEL/Assets/Fonts#Sora</FontFamily>
+
+      <!-- ===== Tamanhos de texto (a aba Aparência multiplica todos por uma escala) ===== -->
+      <x:Double x:Key="FsMicro">10.5</x:Double>
+      <x:Double x:Key="FsLabel">11</x:Double>
+      <x:Double x:Key="FsSmall">11.5</x:Double>
+      <x:Double x:Key="FsSubtitle">12.5</x:Double>
+      <x:Double x:Key="FsBody">13.5</x:Double>
+      <x:Double x:Key="FsTitle">15.5</x:Double>
+      <x:Double x:Key="FsBrand">14</x:Double>
+      <x:Double x:Key="FsGreeting">19</x:Double>
+      <x:Double x:Key="FsH1">25</x:Double>
+      <x:Double x:Key="FsLoginTitle">26</x:Double>
+      <x:Double x:Key="FsAvatar">34</x:Double>
+      <x:Double x:Key="FsHero">44</x:Double>
+      <x:Double x:Key="FsTab">12.5</x:Double>
+      <x:Double x:Key="FsOption">13.5</x:Double>
+
+      <!-- ===== Cantos / espaçamentos / sombra (todos ajustáveis na aba Aparência) ===== -->
+      <CornerRadius x:Key="RadCard">13</CornerRadius>
+      <CornerRadius x:Key="RadControl">10</CornerRadius>
+      <CornerRadius x:Key="RadPill">21</CornerRadius>
+      <CornerRadius x:Key="RadThumb">11</CornerRadius>
+      <Thickness x:Key="PadCard">24</Thickness>
+      <Thickness x:Key="PadTab">15,10</Thickness>
+      <Thickness x:Key="PadOption">14,12</Thickness>
+      <BoxShadows x:Key="CardShadow">0 18 40 -18 #cc000000</BoxShadows>
+
+      <!-- ===== Paleta ===== -->
+      <SolidColorBrush x:Key="AnimusBg" Color="#0a0b0e" />
+      <SolidColorBrush x:Key="AnimusScrim" Color="#800a0b0e" />
+      <SolidColorBrush x:Key="AnimusSidebar" Color="#d20d0f13" />
+      <SolidColorBrush x:Key="AnimusPanel" Color="#c6111419" />
+      <SolidColorBrush x:Key="AnimusPanel2" Color="#c6161a20" />
+      <SolidColorBrush x:Key="AnimusPanel3" Color="#d61b2027" />
+      <SolidColorBrush x:Key="AnimusField" Color="#de0a0b0e" />
+      <SolidColorBrush x:Key="AnimusBorder" Color="#20262f" />
+      <SolidColorBrush x:Key="AnimusBorder2" Color="#2a323d" />
+      <SolidColorBrush x:Key="AnimusText" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="AnimusText2" Color="#c3ccd7" />
+      <SolidColorBrush x:Key="AnimusMuted" Color="#7a8595" />
+      <SolidColorBrush x:Key="AnimusAccent" Color="#2ee27a" />
+      <SolidColorBrush x:Key="AnimusAccentLight" Color="#55ef97" />
+      <SolidColorBrush x:Key="AnimusAccentDark" Color="#14b85f" />
+      <SolidColorBrush x:Key="AnimusAccentSoft" Color="#292ee27a" />
+      <SolidColorBrush x:Key="AnimusDanger" Color="#ff5468" />
+      <SolidColorBrush x:Key="AnimusOnAccent" Color="#06140d" />
+
+      <!-- degrade verde usado nos detalhes -->
+      <LinearGradientBrush x:Key="AnimusAccentGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Offset="0" Color="#2ee27a" />
+        <GradientStop Offset="1" Color="#14b85f" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="AnimusHalo" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Offset="0" Color="#332ee27a" />
+        <GradientStop Offset="1" Color="#0014b85f" />
+      </LinearGradientBrush>
+      <SolidColorBrush x:Key="TextControlBackground" Color="#de0a0b0e" />
+      <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="#e6101318" />
+      <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="#ea101318" />
+      <SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="#800a0b0e" />
+      <SolidColorBrush x:Key="TextControlBorderBrush" Color="#20262f" />
+      <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#3d4855" />
+      <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#2ee27a" />
+      <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="#20262f" />
+      <SolidColorBrush x:Key="TextControlForeground" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="TextControlForegroundFocused" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="TextControlForegroundDisabled" Color="#7a8595" />
+      <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#7a8595" />
+      <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#7a8595" />
+      <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#5c6675" />
+      <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="#402ee27a" />
+      <SolidColorBrush x:Key="TextControlButtonForeground" Color="#7a8595" />
+      <SolidColorBrush x:Key="TextControlButtonForegroundPointerOver" Color="#2ee27a" />
+      <SolidColorBrush x:Key="TextControlButtonBackground" Color="Transparent" />
+      <SolidColorBrush x:Key="TextControlButtonBackgroundPointerOver" Color="Transparent" />
+
+      <!-- ===== Slider (a trilha vazia; a parte cheia e o thumb seguem o accent) ===== -->
+      <SolidColorBrush x:Key="SliderTrackFill" Color="#2a323d" />
+      <SolidColorBrush x:Key="SliderTrackFillPointerOver" Color="#37414f" />
+      <SolidColorBrush x:Key="SliderTrackFillPressed" Color="#37414f" />
+      <SolidColorBrush x:Key="SliderTrackFillDisabled" Color="#20262f" />
+
+      <!-- ===== ComboBox (seletor do 23 DOX) ===== -->
+      <SolidColorBrush x:Key="ComboBoxBackground" Color="#de0a0b0e" />
+      <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#e6101318" />
+      <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="#e6101318" />
+      <SolidColorBrush x:Key="ComboBoxBackgroundFocused" Color="#e6101318" />
+      <SolidColorBrush x:Key="ComboBoxForeground" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="ComboBoxForegroundPressed" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="ComboBoxForegroundFocused" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#20262f" />
+      <SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="#3d4855" />
+      <SolidColorBrush x:Key="ComboBoxBorderBrushPressed" Color="#3d4855" />
+      <SolidColorBrush x:Key="ComboBoxBorderBrushFocused" Color="#2ee27a" />
+      <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="#f21b2027" />
+      <SolidColorBrush x:Key="ComboBoxItemBackgroundPointerOver" Color="#2a323d" />
+      <SolidColorBrush x:Key="ComboBoxItemBackgroundSelected" Color="#292ee27a" />
+      <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPointerOver" Color="#392ee27a" />
+      <SolidColorBrush x:Key="ComboBoxItemForeground" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="ComboBoxItemForegroundSelected" Color="#e3e9f0" />
+      <SolidColorBrush x:Key="ComboBoxItemForegroundPointerOver" Color="#e3e9f0" />
+
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+    <StyleInclude Source="/Styles/Theme.axaml" />
+  </Application.Styles>
+
+</Application>

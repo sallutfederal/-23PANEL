@@ -1,0 +1,405 @@
+<!-- Views/HotView.axaml -->
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Animus.ViewModels"
+             x:Class="Animus.Views.HotView"
+             x:DataType="vm:HotViewModel">
+
+  <UserControl.Styles>
+    <Style Selector="Border.opt">
+      <Setter Property="Background" Value="{DynamicResource AnimusPanel2}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="11" />
+      <Setter Property="Padding" Value="14,11" />
+    </Style>
+  </UserControl.Styles>
+
+  <!-- As duas linhas têm altura limitada (star), senão a linha "Auto" mediria o card de
+       opções com altura infinita: o ScrollViewer se esticaria pra caber tudo e nunca
+       rolaria, empurrando o Progresso pra fora da tela. Com star, o card ganha altura
+       definida e rola por dentro; o Progresso fica com espaço garantido embaixo. -->
+  <Grid RowDefinitions="3*,2*" RowSpacing="18">
+
+    <Border Grid.Row="0" Classes="card">
+      <ScrollViewer>
+        <StackPanel Spacing="16">
+
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Border Width="34" Height="34" CornerRadius="10"
+                    Background="{DynamicResource AnimusAccentSoft}">
+              <PathIcon Width="17" Height="17"
+                        Data="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"
+                        Foreground="{DynamicResource AnimusAccent}" />
+            </Border>
+            <StackPanel VerticalAlignment="Center">
+              <TextBlock Text="23 HOT — verificador multicanal" Classes="h2" />
+              <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                         Text="IMAP • POP3 • SMTP • Webmail — contas próprias ou sob sua administração" />
+            </StackPanel>
+          </StackPanel>
+
+          <Border Classes="divider" />
+
+          <StackPanel Spacing="6">
+            <TextBlock Text="ARQUIVO DE CONTAS (ENTRADA)" Classes="label" Margin="0" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+              <TextBox Grid.Column="0" Classes="field" Text="{Binding InputPath, Mode=TwoWay}"
+                       Watermark="escolha um arquivo…" IsEnabled="{Binding IsIdle}" />
+              <Button Grid.Column="1" Classes="ghost" Content="Escolher…"
+                      Command="{Binding PickInputCommand}" IsEnabled="{Binding IsIdle}" />
+            </Grid>
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsMicro}"
+                       Text="uma conta por linha:  email:senha  ·  linhas com # são ignoradas" />
+          </StackPanel>
+
+          <StackPanel Spacing="6">
+            <TextBlock Text="SALVAR RELATÓRIO EM (SAÍDA)" Classes="label" Margin="0" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+              <TextBox Grid.Column="0" Classes="field" Text="{Binding OutputPath, Mode=TwoWay}"
+                       Watermark="escolha onde salvar…" IsEnabled="{Binding IsIdle}" />
+              <Button Grid.Column="1" Classes="ghost" Content="Escolher…"
+                      Command="{Binding PickOutputCommand}" IsEnabled="{Binding IsIdle}" />
+            </Grid>
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsMicro}"
+                       Text="relatório em JSONL (um objeto por linha: host, usuário, status, pastas, contagem)" />
+          </StackPanel>
+
+          <StackPanel Spacing="6">
+            <TextBlock Text="CHECKER (GO)" Classes="label" Margin="0" />
+            <TextBox Classes="field" Text="{Binding ToolPath, Mode=TwoWay}"
+                     Watermark="deixe vazio para o app localizar em Tools/chk"
+                     IsEnabled="{Binding IsIdle}" />
+          </StackPanel>
+
+          <Border Classes="divider" />
+
+          <TextBlock Text="OPÇÕES PRINCIPAIS" Classes="label" Margin="0" />
+          <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+            <Border Grid.Row="0" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                  <TextBlock Text="Workers" FontWeight="Medium" />
+                  <TextBlock Classes="muted" FontSize="{DynamicResource FsMicro}" Text="goroutines simultâneas (1–500)" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding WorkersText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                  <TextBlock Text="Timeout" FontWeight="Medium" />
+                  <TextBlock Classes="muted" FontSize="{DynamicResource FsMicro}" Text="ex: 8s" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding TimeoutText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                  <TextBlock Text="Delay" FontWeight="Medium" />
+                  <TextBlock Classes="muted" FontSize="{DynamicResource FsMicro}" Text="ms entre combos" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding DelayText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                  <TextBlock Text="Arquivo de proxies" FontWeight="Medium" />
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding UseProxies, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                  <TextBlock Text="Modo furtivo" FontWeight="Medium" />
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding Stealth, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                  <TextBlock Text="Pipeline IMAP" FontWeight="Medium" />
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding Pipeline, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                  <TextBlock Text="Rotação UTLS" FontWeight="Medium" />
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding Utls, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                  <TextBlock Text="Ignorar certificado" FontWeight="Medium" />
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding Insecure, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+          </Grid>
+
+          <Border Classes="divider" />
+          <TextBlock Text="DNS" Classes="label" Margin="0" />
+          <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+            <Border Grid.Row="0" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="DNS over HTTPS" FontWeight="Medium" />
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding Doh, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="DNS over TLS" FontWeight="Medium" />
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding Dot, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Max DNS lookups" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding MaxDnsText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="DNS cache TTL" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding DnsCacheTtlText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+          </Grid>
+
+          <Border Classes="divider" />
+          <TextBlock Text="CONEXÕES E POOL" Classes="label" Margin="0" />
+          <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+            <Border Grid.Row="0" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Max conexões simultâneas" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding MaxConnsText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Pool size" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding PoolSizeText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Proxy health interval" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding ProxyHealthText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+          </Grid>
+
+          <Border Classes="divider" />
+          <TextBlock Text="SCAN DE PORTAS" Classes="label" Margin="0" />
+          <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+            <Border Grid.Row="0" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Timeout scan" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding PortScanTimeoutText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Dial scan" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding PortScanDialText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Port cache TTL" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding PortCacheTtlText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+          </Grid>
+
+          <Border Classes="divider" />
+          <TextBlock Text="PROTOCOLOS" Classes="label" Margin="0" />
+          <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto" ColumnSpacing="10">
+            <Border Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="IMAP" FontWeight="Medium" />
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding EnableIMAP, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="POP3" FontWeight="Medium" />
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding EnablePOP3, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Column="2" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="SMTP" FontWeight="Medium" />
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding EnableSMTP, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+          </Grid>
+
+          <Border Classes="divider" />
+          <TextBlock Text="WEBMAIL / HTTP" Classes="label" Margin="0" />
+          <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+            <Border Grid.Row="0" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="Webmail fallback" FontWeight="Medium" />
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding Webmail, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="Scraping 2FA" FontWeight="Medium" />
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding Scrape2FA, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="2" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="HTTP/2" FontWeight="Medium" />
+                <ToggleButton Grid.Column="1" Classes="switch" VerticalAlignment="Center"
+                              IsChecked="{Binding Http2, Mode=TwoWay}" IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Max idle conns" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding HttpMaxIdleText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Max conns/host" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding HttpMaxHostText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="2" Classes="opt">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel>
+                  <TextBlock Text="Idle timeout" FontWeight="Medium" />
+                </StackPanel>
+                <TextBox Grid.Column="1" Classes="field" Width="66" Text="{Binding HttpIdleTimeoutText, Mode=TwoWay}"
+                         IsEnabled="{Binding IsIdle}" />
+              </Grid>
+            </Border>
+          </Grid>
+
+          <StackPanel Spacing="6">
+            <TextBlock Text="LISTAS CUSTOMIZÁVEIS" Classes="label" Margin="0" />
+            <TextBox Classes="field" Text="{Binding SubdomainsText, Mode=TwoWay}"
+                     Watermark="subdomínios, um por linha" AcceptsReturn="True" Height="70"
+                     IsEnabled="{Binding IsIdle}" />
+            <TextBox Classes="field" Text="{Binding UserAgentsText, Mode=TwoWay}"
+                     Watermark="user-agents, um por linha" AcceptsReturn="True" Height="70"
+                     IsEnabled="{Binding IsIdle}" />
+            <TextBox Classes="field" Text="{Binding LanguagesText, Mode=TwoWay}"
+                     Watermark="idiomas Accept-Language, um por linha" AcceptsReturn="True" Height="50"
+                     IsEnabled="{Binding IsIdle}" />
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal" Spacing="12">
+            <Button Classes="accent" Content="Verificar" IsDefault="True"
+                    Command="{Binding RunCommand}" IsEnabled="{Binding IsIdle}" />
+            <Button Classes="ghost" Content="Cancelar"
+                    IsVisible="{Binding IsRunning}" Command="{Binding CancelCommand}" />
+
+            <StackPanel Orientation="Horizontal" Spacing="10" IsVisible="{Binding IsRunning}" VerticalAlignment="Center">
+              <Ellipse Classes="pulse" Width="9" Height="9" VerticalAlignment="Center"
+                       Fill="{DynamicResource AnimusAccent}" />
+              <TextBlock Text="verificando…" Classes="muted" VerticalAlignment="Center" />
+            </StackPanel>
+          </StackPanel>
+
+          <Border IsVisible="{Binding HasSummary}" Padding="14,12"
+                  CornerRadius="{DynamicResource RadControl}"
+                  Background="{DynamicResource AnimusPanel2}"
+                  BorderBrush="{DynamicResource AnimusBorder2}" BorderThickness="1">
+            <TextBlock Text="{Binding Summary}" TextWrapping="Wrap" FontWeight="Medium" />
+          </Border>
+
+        </StackPanel>
+      </ScrollViewer>
+    </Border>
+
+    <Border Grid.Row="1" Classes="card">
+      <DockPanel>
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+          <StackPanel Grid.Column="0" VerticalAlignment="Center">
+            <TextBlock Text="Progresso" Classes="h2" />
+            <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                       Text="uma linha por conta verificada" />
+          </StackPanel>
+          <Button Grid.Column="1" Classes="ghost" Content="Limpar"
+                  IsVisible="{Binding HasLog}" Command="{Binding ClearLogCommand}" />
+        </Grid>
+
+        <TextBox Text="{Binding LogText}" IsReadOnly="True" AcceptsReturn="True"
+                 TextWrapping="NoWrap"
+                 FontFamily="Cascadia Code,Consolas,Menlo,monospace"
+                 FontSize="{DynamicResource FsSmall}"
+                 Background="{DynamicResource AnimusPanel2}"
+                 BorderBrush="{DynamicResource AnimusBorder}" BorderThickness="1"
+                 CornerRadius="{DynamicResource RadControl}"
+                 Padding="12" MinHeight="180"
+                 VerticalAlignment="Stretch"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" />
+      </DockPanel>
+    </Border>
+
+  </Grid>
+
+</UserControl>

@@ -1,0 +1,535 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- ===================== BASE =====================
+       Fonte, tamanhos, cantos, espacamento e sombra vem de recursos: a aba Aparencia
+       troca esses recursos em tempo real. -->
+  <Style Selector="Window">
+    <Setter Property="FontFamily" Value="{DynamicResource UiFont}" />
+    <Setter Property="FontSize" Value="{DynamicResource FsBody}" />
+    <Setter Property="FontWeight" Value="Normal" />
+  </Style>
+
+  <Style Selector="TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText}" />
+  </Style>
+
+  <Style Selector="TextBlock.muted">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusMuted}" />
+    <Setter Property="FontSize" Value="{DynamicResource FsSubtitle}" />
+    <Setter Property="FontWeight" Value="Light" />
+  </Style>
+
+  <Style Selector="TextBlock.h1">
+    <Setter Property="FontSize" Value="{DynamicResource FsH1}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText}" />
+  </Style>
+
+  <Style Selector="TextBlock.h2">
+    <Setter Property="FontSize" Value="{DynamicResource FsTitle}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText}" />
+  </Style>
+
+  <Style Selector="TextBlock.label">
+    <Setter Property="FontSize" Value="{DynamicResource FsLabel}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="LetterSpacing" Value="1.2" />
+    <Setter Property="Foreground" Value="{DynamicResource AnimusMuted}" />
+    <Setter Property="Margin" Value="0,0,0,6" />
+  </Style>
+
+  <!-- ===================== CARTOES ===================== -->
+  <Style Selector="Border.card">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadCard}" />
+    <Setter Property="Padding" Value="{DynamicResource PadCard}" />
+    <Setter Property="BoxShadow" Value="{DynamicResource CardShadow}" />
+  </Style>
+
+  <!-- entrada suave, so onde for pedida com .enter (evita sobreposicao ao trocar de aba) -->
+  <Style Selector="Border.card.enter">
+    <Style.Animations>
+      <Animation Duration="0:0:0.34" Easing="CubicEaseOut" FillMode="Both">
+        <KeyFrame Cue="0%">
+          <Setter Property="Opacity" Value="0" />
+          <Setter Property="TranslateTransform.Y" Value="12" />
+        </KeyFrame>
+        <KeyFrame Cue="100%">
+          <Setter Property="Opacity" Value="1" />
+          <Setter Property="TranslateTransform.Y" Value="0" />
+        </KeyFrame>
+      </Animation>
+    </Style.Animations>
+  </Style>
+
+  <Style Selector="Border.divider">
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Background" Value="{DynamicResource AnimusBorder}" />
+  </Style>
+
+  <!-- ===================== CAMPOS ===================== -->
+  <Style Selector="TextBox.field">
+    <Setter Property="FontSize" Value="{DynamicResource FsBody}" />
+    <Setter Property="Padding" Value="13,11" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+    <Setter Property="CaretBrush" Value="{DynamicResource AnimusAccent}" />
+    <Setter Property="MinHeight" Value="0" />
+  </Style>
+  <Style Selector="TextBox.field /template/ Border#PART_BorderElement">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.18" />
+        <BrushTransition Property="BorderBrush" Duration="0:0:0.18" />
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <!-- ===================== BOTOES ===================== -->
+  <Style Selector="Button">
+    <Setter Property="FontSize" Value="{DynamicResource FsBody}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="RenderTransform" Value="none" />
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Foreground" Duration="0:0:0.16" />
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.16" Easing="CubicEaseOut" />
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="Button /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.18" />
+        <BrushTransition Property="BorderBrush" Duration="0:0:0.18" />
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <!-- primario -->
+  <Style Selector="Button.accent">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusOnAccent}" />
+    <Setter Property="Padding" Value="20,12" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.accent /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusAccent}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+  </Style>
+  <Style Selector="Button.accent:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusOnAccent}" />
+    <Setter Property="RenderTransform" Value="scale(1.025)" />
+  </Style>
+  <Style Selector="Button.accent:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusAccentLight}" />
+  </Style>
+  <Style Selector="Button.accent:pressed">
+    <Setter Property="RenderTransform" Value="scale(0.97)" />
+  </Style>
+  <Style Selector="Button.accent:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusAccentDark}" />
+  </Style>
+  <Style Selector="Button.accent:disabled /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusAccent}" />
+    <Setter Property="Opacity" Value="0.4" />
+  </Style>
+
+  <!-- secundario -->
+  <Style Selector="Button.ghost">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText2}" />
+    <Setter Property="Padding" Value="16,11" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.ghost /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel2}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+  </Style>
+  <Style Selector="Button.ghost:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="Button.ghost:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel3}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="Button.ghost:pressed">
+    <Setter Property="RenderTransform" Value="scale(0.98)" />
+  </Style>
+
+  <!-- navegacao lateral -->
+  <Style Selector="Button.nav">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText2}" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="Padding" Value="10,11" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="Button.nav /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+  </Style>
+  <Style Selector="Button.nav:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText}" />
+    <Setter Property="RenderTransform" Value="translateX(3px)" />
+  </Style>
+  <Style Selector="Button.nav:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel2}" />
+  </Style>
+  <Style Selector="Button.nav.active">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="Button.nav.active /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel3}" />
+  </Style>
+  <Style Selector="Button.nav.active:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="Button.nav.active:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel3}" />
+  </Style>
+
+  <Style Selector="Border.indicator">
+    <Setter Property="Width" Value="3" />
+    <Setter Property="Height" Value="20" />
+    <Setter Property="CornerRadius" Value="2" />
+    <Setter Property="Background" Value="{DynamicResource AnimusAccent}" />
+    <Setter Property="Opacity" Value="0" />
+    <Setter Property="RenderTransform" Value="scaleY(0.2)" />
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.2" />
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.22" Easing="CubicEaseOut" />
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="Border.indicator.on">
+    <Setter Property="Opacity" Value="1" />
+    <Setter Property="RenderTransform" Value="none" />
+  </Style>
+
+  <!-- ===================== ABAS ===================== -->
+  <Style Selector="Button.tab">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusMuted}" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="FontSize" Value="{DynamicResource FsTab}" />
+    <Setter Property="Padding" Value="{DynamicResource PadTab}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+  </Style>
+  <Style Selector="Button.tab /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+  </Style>
+  <Style Selector="Button.tab:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText}" />
+  </Style>
+  <Style Selector="Button.tab:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel2}" />
+  </Style>
+  <Style Selector="Button.tab.selected">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusOnAccent}" />
+    <Setter Property="FontWeight" Value="Medium" />
+  </Style>
+  <Style Selector="Button.tab.selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="Button.tab.selected:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusOnAccent}" />
+  </Style>
+  <Style Selector="Button.tab.selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusAccentLight}" />
+  </Style>
+
+  <!-- ===================== OPCOES EM GRADE ===================== -->
+  <Style Selector="Button.option">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText2}" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="FontSize" Value="{DynamicResource FsOption}" />
+    <Setter Property="Padding" Value="{DynamicResource PadOption}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+  </Style>
+  <Style Selector="Button.option /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel2}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+  </Style>
+  <Style Selector="Button.option:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText}" />
+    <Setter Property="RenderTransform" Value="translateY(-2px)" />
+  </Style>
+  <Style Selector="Button.option:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusAccentDark}" />
+  </Style>
+  <Style Selector="Button.option.selected">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="Button.option.selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusAccentSoft}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+
+  <!-- ===================== INTERRUPTOR ===================== -->
+  <Style Selector="ToggleButton.switch">
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="track" Width="46" Height="26" CornerRadius="13"
+                Background="{DynamicResource AnimusPanel3}"
+                BorderBrush="{DynamicResource AnimusBorder2}" BorderThickness="1">
+          <Ellipse Name="knob" Width="18" Height="18"
+                   HorizontalAlignment="Left" Margin="3,0,0,0"
+                   Fill="{DynamicResource AnimusMuted}" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="ToggleButton.switch /template/ Border#track">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.2" />
+        <BrushTransition Property="BorderBrush" Duration="0:0:0.2" />
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="ToggleButton.switch /template/ Ellipse#knob">
+    <Setter Property="RenderTransform" Value="none" />
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Fill" Duration="0:0:0.2" />
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.22" Easing="CubicEaseOut" />
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="ToggleButton.switch:checked /template/ Border#track">
+    <Setter Property="Background" Value="{DynamicResource AnimusAccent}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="ToggleButton.switch:checked /template/ Ellipse#knob">
+    <Setter Property="Fill" Value="{DynamicResource AnimusOnAccent}" />
+    <Setter Property="RenderTransform" Value="translateX(20px)" />
+  </Style>
+
+  <!-- ===================== SLIDER ===================== -->
+  <Style Selector="Slider">
+    <Setter Property="MinHeight" Value="0" />
+  </Style>
+
+  <!-- ===================== SELETOR (ComboBox) ===================== -->
+  <Style Selector="ComboBox.field">
+    <Setter Property="FontSize" Value="{DynamicResource FsBody}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+    <Setter Property="Padding" Value="13,10" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText}" />
+  </Style>
+
+  <!-- botao redondo de icone -->
+  <Style Selector="Button.icon-btn">
+    <Setter Property="Width" Value="36" />
+    <Setter Property="Height" Value="36" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="CornerRadius" Value="18" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText2}" />
+  </Style>
+  <Style Selector="Button.icon-btn /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="18" />
+  </Style>
+  <Style Selector="Button.icon-btn:pointerover">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="Button.icon-btn:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel3}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="Button.icon-btn:pressed">
+    <Setter Property="RenderTransform" Value="scale(0.92)" />
+  </Style>
+
+  <!-- campo copiável do 23 DOX -->
+  <Style Selector="Button.field-copy">
+    <Setter Property="Padding" Value="12,9" />
+    <Setter Property="MinWidth" Value="150" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="FontWeight" Value="Normal" />
+  </Style>
+  <Style Selector="Button.field-copy /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusField}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+  </Style>
+  <Style Selector="Button.field-copy:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel3}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+  <Style Selector="Button.field-copy:pressed">
+    <Setter Property="RenderTransform" Value="scale(0.98)" />
+  </Style>
+
+  <!-- menu suspenso de filtros do 23 DOX -->
+  <Style Selector="FlyoutPresenter.dox-filter">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel3}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder2}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadCard}" />
+    <Setter Property="Padding" Value="18,16" />
+    <Setter Property="MaxWidth" Value="440" />
+  </Style>
+
+  <!-- bloco do resultado do 23 DOX: seção (topo) ou sub-bloco (dentro de uma seção) -->
+  <Style Selector="Border.dox-block">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="Border.dox-block.sub">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel2}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource RadControl}" />
+    <Setter Property="Padding" Value="14,12" />
+  </Style>
+  <Style Selector="TextBlock.dox-title.section">
+    <Setter Property="Foreground" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+
+  <!-- swatch de cor -->
+  <Style Selector="Button.swatch">
+    <Setter Property="Width" Value="34" />
+    <Setter Property="Height" Value="34" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="RenderTransform" Value="none" />
+  </Style>
+  <Style Selector="Button.swatch /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="BorderThickness" Value="2" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="CornerRadius" Value="10" />
+  </Style>
+  <Style Selector="Button.swatch:pointerover">
+    <Setter Property="RenderTransform" Value="scale(1.12)" />
+  </Style>
+  <Style Selector="Button.swatch.selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusText}" />
+  </Style>
+
+  <!-- ===================== BARRA LATERAL RETRATIL ===================== -->
+  <Style Selector="Border.sidebar">
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Width" Duration="0:0:0.3" Easing="CubicEaseInOut" />
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="Border.brand-logo">
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Width" Duration="0:0:0.3" Easing="CubicEaseInOut" />
+        <DoubleTransition Property="Height" Duration="0:0:0.3" Easing="CubicEaseInOut" />
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="TextBlock.side-label">
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.22" Easing="CubicEaseOut" />
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="StackPanel.side-label">
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.22" Easing="CubicEaseOut" />
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <!-- ===================== ICONES ===================== -->
+  <Style Selector="PathIcon">
+    <Setter Property="Width" Value="18" />
+    <Setter Property="Height" Value="18" />
+  </Style>
+  <Style Selector="PathIcon.chevron">
+    <Setter Property="RenderTransform" Value="none" />
+    <Setter Property="Transitions">
+      <Transitions>
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.3" Easing="CubicEaseInOut" />
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="PathIcon.chevron.flipped">
+    <Setter Property="RenderTransform" Value="rotate(180deg)" />
+  </Style>
+
+  <!-- ===================== AVISOS ===================== -->
+  <Style Selector="NotificationCard">
+    <Setter Property="Background" Value="{DynamicResource AnimusPanel2}" />
+    <Setter Property="Foreground" Value="{DynamicResource AnimusText}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AnimusBorder2}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="Width" Value="330" />
+    <Setter Property="Margin" Value="0,0,10,10" />
+  </Style>
+  <Style Selector="NotificationCard /template/ Panel#PART_HeaderBar">
+    <Setter Property="Background" Value="{DynamicResource AnimusAccent}" />
+  </Style>
+
+  <!-- ===================== MOVIMENTO =====================
+       O pulso so anima quando o elemento tem a classe .pulse (ligada/desligada
+       pela aba Aparencia via binding). -->
+  <Style Selector="Ellipse.pulse">
+    <Style.Animations>
+      <Animation Duration="0:0:2.4" IterationCount="Infinite" Easing="SineEaseInOut">
+        <KeyFrame Cue="0%"><Setter Property="Opacity" Value="1" /></KeyFrame>
+        <KeyFrame Cue="50%"><Setter Property="Opacity" Value="0.3" /></KeyFrame>
+        <KeyFrame Cue="100%"><Setter Property="Opacity" Value="1" /></KeyFrame>
+      </Animation>
+    </Style.Animations>
+  </Style>
+
+  <Style Selector="Border.login-card">
+    <Style.Animations>
+      <Animation Duration="0:0:0.42" Easing="CubicEaseOut" FillMode="Both">
+        <KeyFrame Cue="0%">
+          <Setter Property="Opacity" Value="0" />
+          <Setter Property="TranslateTransform.Y" Value="18" />
+        </KeyFrame>
+        <KeyFrame Cue="100%">
+          <Setter Property="Opacity" Value="1" />
+          <Setter Property="TranslateTransform.Y" Value="0" />
+        </KeyFrame>
+      </Animation>
+    </Style.Animations>
+  </Style>
+  <Style Selector="Border.login-card.err">
+    <Style.Animations>
+      <Animation Duration="0:0:0.42" Easing="CubicEaseOut">
+        <KeyFrame Cue="0%"><Setter Property="TranslateTransform.X" Value="0" /></KeyFrame>
+        <KeyFrame Cue="20%"><Setter Property="TranslateTransform.X" Value="-11" /></KeyFrame>
+        <KeyFrame Cue="45%"><Setter Property="TranslateTransform.X" Value="9" /></KeyFrame>
+        <KeyFrame Cue="70%"><Setter Property="TranslateTransform.X" Value="-5" /></KeyFrame>
+        <KeyFrame Cue="100%"><Setter Property="TranslateTransform.X" Value="0" /></KeyFrame>
+      </Animation>
+    </Style.Animations>
+  </Style>
+
+</Styles>

@@ -1,0 +1,72 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Animus.ViewModels"
+             x:Class="Animus.Views.BackgroundSettingsView"
+             x:DataType="vm:BackgroundSettingsViewModel">
+
+  <Border Classes="card">
+    <StackPanel Spacing="16">
+
+      <StackPanel Orientation="Horizontal" Spacing="10">
+        <Border Width="34" Height="34" CornerRadius="10"
+                Background="{DynamicResource AnimusAccentSoft}">
+          <PathIcon Width="17" Height="17"
+                    Data="M4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M4,6V18H20V6H4M6,8H12V11H6V8Z"
+                    Foreground="{DynamicResource AnimusAccent}" />
+        </Border>
+        <StackPanel VerticalAlignment="Center">
+          <TextBlock Text="Plano de fundo" Classes="h2" />
+          <TextBlock Classes="muted" FontSize="{DynamicResource FsSmall}"
+                     Text="a imagem única do app — imagens de Assets que começam com bg" />
+        </StackPanel>
+      </StackPanel>
+
+      <ItemsControl ItemsSource="{Binding Backgrounds}" IsVisible="{Binding HasBackgrounds}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="vm:BackgroundOption">
+            <Button Classes="thumb" Classes.selected="{Binding IsSelected}"
+                    Command="{Binding SelectCommand}" Margin="0,0,14,14">
+              <Border CornerRadius="{DynamicResource RadThumb}" ClipToBounds="True"
+                      Width="204" Height="118" Background="{DynamicResource AnimusPanel3}">
+                <Panel>
+                  <TextBlock Text="carregando…" Classes="muted" FontSize="{DynamicResource FsSmall}"
+                             HorizontalAlignment="Center" VerticalAlignment="Center"
+                             IsVisible="{Binding IsLoading}" />
+                  <Image Source="{Binding Thumbnail}" Stretch="UniformToFill"
+                         RenderOptions.BitmapInterpolationMode="HighQuality" />
+                  <Border VerticalAlignment="Bottom" Padding="11,7">
+                    <Border.Background>
+                      <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                        <GradientStop Offset="0" Color="#00000000" />
+                        <GradientStop Offset="1" Color="#d9000000" />
+                      </LinearGradientBrush>
+                    </Border.Background>
+                    <DockPanel>
+                      <Border DockPanel.Dock="Right" Width="20" Height="20" CornerRadius="10"
+                              Background="{DynamicResource AnimusAccent}"
+                              IsVisible="{Binding IsSelected}">
+                        <PathIcon Width="12" Height="12"
+                                  Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"
+                                  Foreground="{DynamicResource AnimusOnAccent}" />
+                      </Border>
+                      <TextBlock Text="{Binding Label}" FontSize="{DynamicResource FsSmall}"
+                                 FontWeight="Medium" Foreground="#f2f6fb" VerticalAlignment="Center" />
+                    </DockPanel>
+                  </Border>
+                </Panel>
+              </Border>
+            </Button>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
+      <TextBlock Classes="muted" IsVisible="{Binding !HasBackgrounds}"
+                 Text="Nenhuma imagem começando com bg foi encontrada em Assets." />
+
+    </StackPanel>
+  </Border>
+
+</UserControl>
